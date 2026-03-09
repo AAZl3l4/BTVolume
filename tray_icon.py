@@ -96,9 +96,12 @@ class TrayIcon:
         # 快速设置音量 - 直接显示在一级菜单
         preset_volumes = self.app.config.get_preset_volumes()
         for volume in preset_volumes:
+            # 使用默认参数捕获volume，避免闭包问题
+            def make_callback(vol):
+                return lambda icon, item: self._on_set_volume(vol)
             menu_items.append(pystray.MenuItem(
                 f'音量 {volume}%',
-                lambda _, v=volume: self._on_set_volume(v)
+                make_callback(volume)
             ))
         
         menu_items.append(pystray.Menu.SEPARATOR)

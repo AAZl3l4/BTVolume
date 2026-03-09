@@ -107,6 +107,10 @@ class BTVolumeControlApp:
         Args:
             volume (int): 音量值 (0-100)
         """
+        # 初始化COM组件（Windows多线程需要）
+        import pythoncom
+        pythoncom.CoInitialize()
+        
         try:
             if self.bluetooth_checker.is_bluetooth_connected():
                 self.audio_controller.set_volume(volume)
@@ -115,9 +119,16 @@ class BTVolumeControlApp:
                 self.tray_icon.notify('提示', '未检测到蓝牙耳机连接')
         except Exception:
             pass
+        finally:
+            # 释放COM组件
+            pythoncom.CoUninitialize()
     
     def check_bluetooth(self):
         """检查蓝牙状态"""
+        # 初始化COM组件（Windows多线程需要）
+        import pythoncom
+        pythoncom.CoInitialize()
+        
         try:
             if self.bluetooth_checker.is_bluetooth_connected():
                 devices = self.bluetooth_checker.get_connected_bluetooth_devices()
@@ -130,6 +141,9 @@ class BTVolumeControlApp:
                 self.tray_icon.notify('蓝牙状态', '未连接蓝牙耳机')
         except Exception:
             pass
+        finally:
+            # 释放COM组件
+            pythoncom.CoUninitialize()
     
     def reload_scheduler(self):
         """重新加载定时任务"""
