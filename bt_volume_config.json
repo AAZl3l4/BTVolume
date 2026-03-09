@@ -1,0 +1,16 @@
+{
+  "preset_volumes": [
+    20,
+    50
+  ],
+  "scheduled_tasks": [
+    {
+      "id": 0,
+      "time": "10:06",
+      "volume": 20,
+      "enabled": true
+    }
+  ],
+  "auto_start": false,
+  "minimize_to_tray": true
+}
